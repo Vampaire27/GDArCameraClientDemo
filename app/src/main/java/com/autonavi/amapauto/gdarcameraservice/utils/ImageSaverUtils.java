@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.util.Log;
+import com.autonavi.amapauto.utils.Logger;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ public class ImageSaverUtils {
      * 保存图片NV21数据为jpg, 调试过程中查看图片信息是否正确
      */
     public static void saveYuv2PictureWithApi(byte[] data, int width, int height) {
-        Log.d(TAG, "saveYuv2PictureWithApi width = "+width+" height = "+height);
+        Logger.d(TAG, "saveYuv2PictureWithApi width = "+width+" height = "+height);
         FileOutputStream outStream;
         File file = new File(imageSavePath);
         if(!file.exists()){
@@ -48,7 +49,7 @@ public class ImageSaverUtils {
 
     private static int saveCount = 0;
     public static void saveYuv2PictureWithRawData(byte[] data,int width, int height,boolean isConverted,boolean isNeedRestrict) {
-        Log.d(TAG, "saveYuv2PictureWithRawData width = "+width+" height = "+height);
+        Logger.d(TAG, "saveYuv2PictureWithRawData width = "+width+" height = "+height);
 
         if(isNeedRestrict) {
             //调用10次保存一次，避免保存太频繁，SD卡操作频繁卡死

@@ -3,6 +3,8 @@ package com.autonavi.amapauto.gdarcameraservice.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.autonavi.amapauto.utils.Logger;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -26,7 +28,6 @@ public final class InvokeUtil {
 
     public static <T> T newInstanceOrThrow(Class<? extends T> clz, Object...params) throws IllegalAccessException,
             InvocationTargetException, InstantiationException {
-        Log.d(TAG, "newInstanceOrThrow()");
         Constructor[] constructors = clz.getDeclaredConstructors();
         if ((constructors == null) || (constructors.length == 0)) {
             throw new IllegalArgumentException("Can't get even one available constructor for " + clz);
@@ -64,7 +65,7 @@ public final class InvokeUtil {
 
     public static Object invokeMethod(Object obj, String methodName, Object...params)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Log.d(TAG, "invokeMethod()");
+        Logger.d(TAG, "invokeMethod()");
         Method method = matchMethod(obj.getClass(), methodName, params);
         if (method == null) {
             throw new NoSuchMethodException("class " + obj.getClass().getCanonicalName() +
@@ -75,7 +76,7 @@ public final class InvokeUtil {
 
     public static Object invokeStaticMethod(Class clz, String methodName, Object...params)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Log.d(TAG, "invokeStaticMethod()");
+        Logger.d(TAG, "invokeStaticMethod()");
         Method method = matchMethod(clz, methodName, params);
         if (method == null) {
             throw new NoSuchMethodException("class " + clz.getCanonicalName() +
@@ -85,7 +86,7 @@ public final class InvokeUtil {
     }
 
     public static Class wrappedClass(Class clz) {
-        Log.d(TAG, "wrappedClass()");
+        Logger.d(TAG, "wrappedClass()");
         try {
             return ((Class) clz.getField("TYPE").get(null));
         } catch (Exception e) {
@@ -94,7 +95,7 @@ public final class InvokeUtil {
     }
 
     public static Method[] methodsForName(Class clz, String name) {
-        Log.d(TAG, "methodsForName()");
+        Logger.d(TAG, "methodsForName()");
         Method[] methods = clz.getDeclaredMethods();
         if (methods == null || methods.length == 0) {
             return null;
@@ -112,7 +113,7 @@ public final class InvokeUtil {
     }
 
     public static Method matchMethod(Class clz, String name, Object...params) {
-        Log.d(TAG, "matchMethod()");
+        Logger.d(TAG, "matchMethod()");
         Method[] methods = methodsForName(clz, name);
         if (methods == null || methods.length == 0) {
             return null;
@@ -136,7 +137,7 @@ public final class InvokeUtil {
     }
 
     private static int instanceOf(Object obj, Class<?> clz) {
-        Log.d(TAG, "instanceOf()");
+        Logger.d(TAG, "instanceOf()");
         if ( obj == null ) {
             // 基本类型不允许null对象
             if (clz.isPrimitive()) {
@@ -177,12 +178,12 @@ public final class InvokeUtil {
     }
 
     private static <T> int arrayLength(T[] array) {
-        Log.d(TAG, "arrayLength()");
+        Logger.d(TAG, "arrayLength()");
         return (array == null ? 0 : array.length);
     }
 
     private static int matchMethodParameterTypes(Method method, Object...params) {
-        Log.d(TAG, "matchMethodParameterTypes()");
+        Logger.d(TAG, "matchMethodParameterTypes()");
         Class[] types = method.getParameterTypes();
         int tlen = arrayLength(types);
         int plen = arrayLength(params);
@@ -255,7 +256,7 @@ public final class InvokeUtil {
 
     public static void setValueOfField(Object obj, String fieldName, Object value) throws NoSuchFieldException,
             IllegalAccessException {
-        Log.d(TAG, "setValueOfField()");
+        Logger.d(TAG, "setValueOfField()");
         if (TextUtils.isEmpty(fieldName)) {
             throw new IllegalArgumentException("param fieldName is empty");
         }
@@ -268,7 +269,7 @@ public final class InvokeUtil {
     }
 
     private static Field fieldByNameRecursive(Class clz, String fieldName) throws NoSuchFieldException {
-        Log.d(TAG, "fieldByNameRecursive()");
+        Logger.d(TAG, "fieldByNameRecursive()");
         Class target = clz;
         while (!target.equals(Object.class)) {
             try {

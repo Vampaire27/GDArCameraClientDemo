@@ -24,6 +24,7 @@ import com.autonavi.amapauto.gdarcameraservice.camera.GDCamera;
 import com.autonavi.amapauto.gdarcameraservice.camera.IArCamera;
 import com.autonavi.amapauto.gdarcameraservice.constant.gd.ArCameraParam;
 import com.autonavi.amapauto.gdarcameraservice.utils.ImageSaverUtils;
+import com.autonavi.amapauto.utils.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             out.copyTo(bitmap);
             return bitmap;
         }else{
-            Log.d(TAG, "nv21ToBitmap mReadData==null");
+            Logger.d(TAG, "nv21ToBitmap mReadData==null");
             return null;
         }
     }
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate()");
+        Logger.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         arCamera = new GDCamera(GDCamera.DEFAULT_SERVICE_ACTION,GDCamera.DEFAULT_SERVICE_PACKAGE_NAME);
 
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            Log.d(TAG, "in surfaceCreated");
+            Logger.d(TAG, "in surfaceCreated");
             surfaceHolder = holder;
 
             //第二种，设置外部预览的surface的情况
@@ -219,24 +220,24 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            Log.d(TAG, "in surfaceChanged");
+            Logger.d(TAG, "in surfaceChanged");
         }
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            Log.d(TAG, "in surfaceDestroyed");
+            Logger.d(TAG, "in surfaceDestroyed");
         }
     };
 
     private void initCamera(){
-        Log.d(TAG, "initCamera()");
+        Logger.d(TAG, "initCamera()");
         if(arCamera!=null) {
             arCamera.initCamera(autoArCameraParam);
         }
     }
 
     private void openCamera() {
-        Log.d(TAG, "openCamera()");
+        Logger.d(TAG, "openCamera()");
         if(arCamera!=null) {
             boolean openResult = arCamera.openCamera(0);
             if(!openResult){
@@ -247,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void closeCamera() {
-        Log.d(TAG, "closeCamera()");
+        Logger.d(TAG, "closeCamera()");
         if(arCamera!=null) {
             arCamera.closeCamera();
         }
@@ -272,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             while (arCamera != null && arCamera.isCameraOpened() && isMyStart) {
-                Log.d(TAG, "ReadThread run threadName = "+threadName);
+                Logger.d(TAG, "ReadThread run threadName = "+threadName);
                 readData = arCamera.requestCameraData();
 
                 mFrameCount++;
@@ -281,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                     mFps = (int) (((float) mFrameCount / (float) mDeltaTime) * 1000) + 1;
                     mCounterTime = System.currentTimeMillis();
                     mFrameCount = 0;
-                    Log.d(TAG, "FPS: " + mFps);
+                    Logger.d(TAG, "FPS: " + mFps);
                 }
 
                 if(readData !=null) {
@@ -294,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                      */
                     clientHandler.obtainMessage(1).sendToTarget();
                 }else{
-                    Log.d(TAG, "ReadThread run mReadData!=null");
+                    Logger.d(TAG, "ReadThread run mReadData!=null");
                 }
 
                 try {
@@ -303,13 +304,13 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            Log.d(TAG, "ReadThread run end");
+            Logger.d(TAG, "ReadThread run end");
         }
     }
 
 
     private void runReadThread() {
-        Log.d(TAG, "runReadThread()");
+        Logger.d(TAG, "runReadThread()");
         if(readThread!=null){
             readThread.interrupt();
         }
@@ -319,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "onDestroy()");
+        Logger.d(TAG, "onDestroy()");
         if(arCamera!=null){
             arCamera.unInitCamera();
         }

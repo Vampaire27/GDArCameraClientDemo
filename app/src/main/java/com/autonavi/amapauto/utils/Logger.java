@@ -514,7 +514,7 @@ public class Logger {
 //                    formatDate(bf,milliseconds);
 //                    bf.append(":");
                     msgFromParams(bf, msg, params);
-                    Log.d(tag, bf.toString());
+                    Logger.d(tag, bf.toString());
                 }
             });
             notifyLock();
@@ -596,7 +596,7 @@ public class Logger {
          */
         private void excuteTask() throws InterruptedException {
             int logSize = taskLogList.size();
-//            Log.d("tag_auto", "excute logger size = " + logSize );
+//            Logger.d("tag_auto", "excute logger size = " + logSize );
             if(logSize > 0){
                 /**
                  * Auto001-9455 复制- MonkeyLog: (CRASH) java.lang.ArrayIndexOutOfBoundsException

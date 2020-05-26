@@ -5,6 +5,8 @@ import android.os.MemoryFile;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
+import com.autonavi.amapauto.utils.Logger;
+
 import java.io.FileDescriptor;
 import java.nio.ByteBuffer;
 
@@ -28,7 +30,7 @@ public class MemoryFileUtil {
      * @return MemoryFile对象 or null
      */
     public static MemoryFile openMemoryFile(ParcelFileDescriptor parcelFileDescriptor, int length, int mode){
-        Log.d(TAG, "openMemoryFile()");
+        Logger.d(TAG, "openMemoryFile()");
         if(parcelFileDescriptor == null){
             Log.e(TAG, "parcelFileDescriptor is null");
             return null;
@@ -45,7 +47,7 @@ public class MemoryFileUtil {
     }
 
     private static MemoryFile openMemoryFileV27(FileDescriptor fileDescriptor, int length, int mode){
-        Log.d(TAG, "openMemoryFile27()");
+        Logger.d(TAG, "openMemoryFile27()");
         MemoryFile memoryFile = null;
         try {
             memoryFile = new MemoryFile(MEMORY_NAME, 1);
@@ -63,7 +65,7 @@ public class MemoryFileUtil {
     }
 
     private static MemoryFile openMemoryFileV28(FileDescriptor fileDescriptor, int mode) {
-        Log.d(TAG, "openMemoryFile28()");
+        Logger.d(TAG, "openMemoryFile28()");
         MemoryFile memoryFile = null;
         try {
             memoryFile = new MemoryFile(MEMORY_NAME, 1);
