@@ -299,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 try {
+                    //睡眠时间会直接影响帧率的输出，这里后续需要和服务端保存统一的帧率基调
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
