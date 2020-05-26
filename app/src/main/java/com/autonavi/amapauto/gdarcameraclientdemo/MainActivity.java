@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
             //第二种，设置外部预览的surface的情况
             /*if(arCamera!=null){
-                arCamera.setSurface(mSurfaceHolder.getSurface());
+                arCamera.setSurface(surfaceHolder.getSurface());
             }
             //如果需要预览那么预览需要在初始化调用之前设置
             initCamera();*/
