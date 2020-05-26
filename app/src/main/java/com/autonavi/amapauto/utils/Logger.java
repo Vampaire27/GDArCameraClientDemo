@@ -232,7 +232,7 @@ public class Logger {
      *  创建日志
      */
     public static boolean createLogDir(){
-        String filePath = getLogFileDir(applicationContext);
+        String filePath = getLogFileDir();
         File tempFile = new File(filePath);
         if(tempFile.exists()){
             if(!tempFile.isDirectory()) {
@@ -244,10 +244,9 @@ public class Logger {
 
     /**
      * 获取日志的路径
-     * @param context
      * @return
      */
-    public static String getLogFileDir(Context context){
+    public static String getLogFileDir(){
         return "/sdcard/amapauto9/gdarcameraclient/";
     }
 
@@ -301,7 +300,7 @@ public class Logger {
             if (applicationContext == null) {
                 return;
             }
-            filePath = getLogFileDir(applicationContext);
+            filePath = getLogFileDir();
             File tempFile = new File(filePath);
             if(tempFile.exists()){
                if(!tempFile.isDirectory()) {

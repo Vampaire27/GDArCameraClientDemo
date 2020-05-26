@@ -20,7 +20,7 @@ interface IGDCameraStateCallBack{
     void onDisconnected();
 
     /**
-     * 摄像头开启回调
+     * 摄像头已开启的回调，建议在摄像头成功打开并且有返回第一张图片、共享内存打开成功时才回调该接口
      * @param parcelFileDescriptor 文件描述器（共享内存）
      * @param arCameraOpenResultParam            打开摄像头后的返回的结果参数
      * @param memoryfileName       共享文件名

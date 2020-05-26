@@ -47,7 +47,7 @@ interface IGDCameraService {
     IGDSize getRecommendSize(String clientId);
 
     /**
-     * 摄像头是否已连接
+     * 摄像头是否已连接，建议在摄像头成功打开时才设置为已连接，注意这里的isCameraConnected不是指IGDCameraService服务的连接绑定
      * @param clientId 客户端ID
      *
      * @return true：已连接, false：未连接
@@ -55,7 +55,7 @@ interface IGDCameraService {
     boolean isCameraConnected(String clientId);
 
     /**
-     * 摄像头是否已打开
+     * 摄像头是否已打开，建议在摄像头成功打开并且有返回第一张图片时才设置为真正的打开
      * @param clientId 客户端ID
      *
      * @return true：已打开, false：未打开

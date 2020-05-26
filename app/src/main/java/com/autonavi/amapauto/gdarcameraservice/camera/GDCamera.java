@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.os.MemoryFile;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.view.Surface;
 
 import com.autonavi.amapauto.gdarcameraservice.ArClientContext;
@@ -28,8 +29,6 @@ import static android.content.Context.BIND_AUTO_CREATE;
 
 public class GDCamera extends AbstractArCamera {
     private final static String TAG = "GDCamera";
-
-    private final String ACTION = "com.autonavi.amapauto.gdarcameraservice";
 
     private final String clientId = "com.autonavi.amapauto";
     /**
@@ -88,17 +87,26 @@ public class GDCamera extends AbstractArCamera {
      */
     private boolean isNeedSaveCameraImage = false;
 
+    public final static String DEFAULT_SERVICE_ACTION = "com.autonavi.amapauto.gdarcameraservice";
+
     public final static String DEFAULT_SERVICE_PACKAGE_NAME = "com.autonavi.amapauto.gdarcameraservicedemo";
+
+    private String serviceAction = DEFAULT_SERVICE_ACTION;
 
     private String servicePackageName = DEFAULT_SERVICE_PACKAGE_NAME;
 
-    public GDCamera(String servicePackageName) {
-        if(servicePackageName!=null) {
+    public GDCamera(String serviceAction,String servicePackageName) {
+        if(!TextUtils.isEmpty(serviceAction)) {
+            this.serviceAction = serviceAction;
+        }else{
+            Logger.d(TAG, "GDCamera serviceAction == null");
+        }
+        if(!TextUtils.isEmpty(servicePackageName)) {
             this.servicePackageName = servicePackageName;
         }else{
             Logger.d(TAG, "GDCamera servicePackageName == null");
         }
-        Logger.d(TAG, "GDCamera servicePackageName = {?}",servicePackageName);
+        Logger.d(TAG, "GDCamera serviceAction = {?},servicePackageName = {?}",serviceAction,servicePackageName);
     }
 
     private void bindCameraService() {
@@ -106,7 +114,7 @@ public class GDCamera extends AbstractArCamera {
         //Intent intent =  new Intent();
         //intent.setComponent(new ComponentName("com.autonavi.amapauto.gdarcameraservicedemo","com.autonavi.amapauto.gdarcameraservicedemo.GDArCameraService"));
         Intent intent =  new Intent();
-        intent.setAction(ACTION);
+        intent.setAction(serviceAction);
         intent.setPackage(servicePackageName);
 
         boolean result = ArClientContext.getInstance().getApplication().bindService(intent, mServiceConnection, BIND_AUTO_CREATE);

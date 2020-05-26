@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
-        arCamera = new GDCamera(GDCamera.DEFAULT_SERVICE_PACKAGE_NAME);
+        arCamera = new GDCamera(GDCamera.DEFAULT_SERVICE_ACTION,GDCamera.DEFAULT_SERVICE_PACKAGE_NAME);
 
         setContentView(R.layout.activity_main);
 
