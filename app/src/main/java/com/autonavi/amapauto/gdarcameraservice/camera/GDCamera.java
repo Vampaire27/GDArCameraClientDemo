@@ -36,8 +36,14 @@ public class GDCamera extends AbstractArCamera {
      */
     private IGDCameraService gdCameraService;
 
+    /**
+     * 摄像头是否连接
+     */
     private boolean isCameraConnected;
 
+    /**
+     * 摄像头是否打开
+     */
     private boolean isCameraOpened;
 
     /**
@@ -75,10 +81,13 @@ public class GDCamera extends AbstractArCamera {
      */
     private byte[] readData = new byte[dataSize];
 
+    /**
+     * 高德auto内部用的ar camera的相关参数类对象
+     */
     private ArCameraParam autoArCameraParam;
 
     /**
-     * 预览接口
+     * 预览接口用的surface
      */
     private Surface externalSurface = null;
 
@@ -87,12 +96,24 @@ public class GDCamera extends AbstractArCamera {
      */
     private boolean isNeedSaveCameraImage = false;
 
+    /**
+     * 默认服务的ACTION
+     */
     public final static String DEFAULT_SERVICE_ACTION = "com.autonavi.amapauto.gdarcameraservice";
 
+    /**
+     * 默认服务所在程序的包名
+     */
     public final static String DEFAULT_SERVICE_PACKAGE_NAME = "com.autonavi.amapauto.gdarcameraservicedemo";
 
+    /**
+     * 服务的ACTION
+     */
     private String serviceAction = DEFAULT_SERVICE_ACTION;
 
+    /**
+     * 服务所在程序的包名
+     */
     private String servicePackageName = DEFAULT_SERVICE_PACKAGE_NAME;
 
     public GDCamera(String serviceAction,String servicePackageName) {
@@ -109,6 +130,9 @@ public class GDCamera extends AbstractArCamera {
         Logger.d(TAG, "GDCamera serviceAction = {?},servicePackageName = {?}",serviceAction,servicePackageName);
     }
 
+    /**
+     * 绑定服务
+     */
     private void bindCameraService() {
         Logger.d(TAG, "bindCameraService");
         //Intent intent =  new Intent();
@@ -121,6 +145,9 @@ public class GDCamera extends AbstractArCamera {
         Logger.d(TAG, "bindCameraService bind result = " + result);
     }
 
+    /**
+     * 绑定服务
+     */
     private void unBindCameraService(){
         Logger.d(TAG, "bindCameraService");
         ArClientContext.getInstance().getApplication().unbindService(mServiceConnection);
@@ -150,7 +177,7 @@ public class GDCamera extends AbstractArCamera {
                 reInitCameraparam(arCameraOpenResultParam.imageWidth, arCameraOpenResultParam.imageHeight, arCameraOpenResultParam.imageSize,arCameraOpenResultParam.imageFormat);
             }
             /**
-             * step6-通过文件描述器创建MemoryFile对象
+             * 通过文件描述器创建MemoryFile对象
              */
             try {
                 Logger.d(TAG, "parcelFileDescriptor: " + parcelFileDescriptor);
@@ -183,12 +210,12 @@ public class GDCamera extends AbstractArCamera {
             try {
                 initArCameraParamWithMem();
                 /**
-                 * step2-获取连接状态
+                 * 获取连接状态
                  */
                 isCameraConnected = gdCameraService.isCameraConnected(clientId);
                 Logger.d(TAG, "onServiceConnected isCameraConnected = {?}",isCameraConnected);
                 /**
-                 * step3-注册摄像头状态监听
+                 * 注册摄像头状态监听
                  */
                 gdCameraService.registerCameraStateCallback(clientId,gdCameraStateCallBack);
 
@@ -297,7 +324,7 @@ public class GDCamera extends AbstractArCamera {
             //测试，这里先指定为某一个格式
 //            param.width = 800;
 //            param.height = 480;
-            //param.format = ArCameraParam.IMAGE_TYPE_NV21;
+//            param.format = ArCameraParam.IMAGE_TYPE_NV21;
             param.format = ArCameraParam.IMAGE_TYPE_YUV_420_888;
 
             autoArCameraParam = param;
