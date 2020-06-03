@@ -61,8 +61,29 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/define_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_above="@id/opera_button"
+        >
+        <EditText
+            android:id="@+id/define_service_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_service_name"
+            />
+        <EditText
+            android:id="@+id/define_service_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_service_action"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_above="@id/define_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

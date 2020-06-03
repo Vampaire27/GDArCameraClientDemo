@@ -12,10 +12,12 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.renderscript.Type;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,8 @@ import com.autonavi.amapauto.gdarcameraservice.camera.IArCamera;
 import com.autonavi.amapauto.gdarcameraservice.constant.gd.ArCameraParam;
 import com.autonavi.amapauto.gdarcameraservice.utils.ImageSaverUtils;
 import com.autonavi.amapauto.utils.Logger;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private ArCameraParam autoArCameraParam;
 
     private IArCamera arCamera;
+
+    String serviceName = GDCamera.DEFAULT_SERVICE_PACKAGE_NAME;
+
+    String serviceAction = GDCamera.DEFAULT_SERVICE_ACTION;
 
     private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -108,13 +116,35 @@ public class MainActivity extends AppCompatActivity {
 
             String str = DATE_FORMAT.format(new Date()) + ", " + (readData !=null?(readData.length + ", " + readData[0]):(0 + ", null"));
 
-            receivedDataTV.setText("FPS:" + mFps + ";   " + str);
+            if(receivedDataTV!=null) {
+                receivedDataTV.setText("FPS:" + mFps + ";   " + str);
+            }
 
             Bitmap bitmap = nv21ToBitmap();
             if(bitmap!=null) {
-                imageView.setImageBitmap(bitmap);
+                if(imageView!=null) {
+                    imageView.setImageBitmap(bitmap);
+                }
             }
         }
+    }
+
+    private void initGDCamera(){
+        EditText serviceNameView = findViewById(R.id.define_service_name);
+        EditText serviceActionView = findViewById(R.id.define_service_action);
+        if(serviceNameView!=null){
+            if(!TextUtils.isEmpty(serviceNameView.getText().toString().trim()) && !getResources().getString(R.string.app_service_name).equals(serviceNameView.getText().toString().trim())){
+                serviceName = serviceNameView.getText().toString().trim();
+            }
+        }
+
+        if(serviceActionView!=null){
+            if(!TextUtils.isEmpty(serviceActionView.getText().toString().trim()) && !getResources().getString(R.string.app_service_action).equals(serviceActionView.getText().toString().trim())){
+                serviceAction = serviceActionView.getText().toString().trim();
+            }
+        }
+        Logger.d(TAG, "onCreate() serviceAction = {?} serviceName = {?}",serviceAction,serviceName);
+        arCamera = new GDCamera(serviceAction,serviceName);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -122,9 +152,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Logger.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
-        arCamera = new GDCamera(GDCamera.DEFAULT_SERVICE_ACTION,GDCamera.DEFAULT_SERVICE_PACKAGE_NAME);
 
         setContentView(R.layout.activity_main);
+
+        initGDCamera();
 
         SurfaceView mSurfaceView = findViewById(R.id.surface_view);
         mSurfaceView.getHolder().addCallback(callback);
@@ -136,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                initGDCamera();
                 initCamera();
             }
         });
@@ -211,10 +243,9 @@ public class MainActivity extends AppCompatActivity {
                 arCamera.setSurface(surfaceHolder.getSurface());
             }
             //如果需要预览那么预览需要在初始化调用之前设置
-            initCamera();*/
-
+            initCamera();
             //初始化完成后才可以点打开
-            Toast.makeText(MainActivity.this,"可以点开始了",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"可以点开始了",Toast.LENGTH_LONG).show();*/
 
         }
 

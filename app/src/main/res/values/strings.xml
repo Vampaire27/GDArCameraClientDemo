@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GDArCameraClientDemo</string>
+
+    <string name="app_service_name">请输入摄像头服务端程序的包名，默认使用导航服务端DEMO程序的包名</string>
+
+    <string name="app_service_action">请输入摄像头服务端程序启动服务的Action，默认使用导航服务端DEMO程序的定义的Action</string>
 </resources>
