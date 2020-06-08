@@ -356,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
         if(arCamera!=null){
             arCamera.unInitCamera();
         }
-
+        isMyStart = false;
         super.onDestroy();
     }
 }
